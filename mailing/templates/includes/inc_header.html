@@ -2,20 +2,23 @@
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="" class="nav-link px-2 text-secondary">Главная</a></li>
-                <li><a href="#" class="nav-link px-2 text-white">Рассылки</a></li>
-                <li><a href="#" class="nav-link px-2 text-white">Сообщения</a></li>
-                <li><a href="#" class="nav-link px-2 text-white">Клиенты</a></li>
-                <li><a href="#" class="nav-link px-2 text-white">Пользователи</a></li>
+                <li><a href="/" class="nav-link px-2 text-white">Главная</a></li>
+                <li><a href="{% url 'mailing:message_list' %}" class="nav-link px-2 text-white">Сообщения</a></li>
+                <li><a href="{% url 'mailing:client_list' %}" class="nav-link px-2 text-white">Клиенты</a></li>
             </ul>
 
 
             <div class="text-end">
                 {% if user.is_authenticated %}
                 <form action="{% url 'users:logout' %}" method="post">
-            {% csrf_token %}
+                    {% csrf_token %}
                     <button type="submit" class="btn btn-outline-light me-2">Выйти</button>
+                    <a href="{% url 'users:profile' request.user.pk%}">
+                        <button type="button" class="btn btn-outline-light me-2">{{ user.email }}</button>
+                    </a>
                 </form>
+                <a class="btn btn-primary" href="{% url 'mailing:message_create' %}" role="button">Создать Рассылку</a>
+                <a class="btn btn-primary" href="{% url 'mailing:client_create' %}" role="button">Добавить клиента</a>
                 {% else %}
                 <a href="{% url 'users:login' %}">
                     <button type="button" class="btn btn-outline-light me-2">Войти</button>

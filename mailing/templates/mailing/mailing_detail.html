@@ -11,7 +11,7 @@
                 <div class="card-body">
                     <p class="card-text">Статус: {{object.status}}</p>
                     <p class="card-text">Периодичность: {{object.periodicity}}</p>
-                    <p class="card-text">Клиенты: {{object.client_id}}</p>
+                    <p class="card-text">Клиенты: {{object.client_id.name}}</p>
                     <p class="card-text">Автор: {{object.autor}}</p>
                     <a class="btn btn-primary" href="{% url 'mailing:index' %}" role="button">Назад</a>
                 </div>

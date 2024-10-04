@@ -1,31 +1,33 @@
 {% extends 'mailing/index.html' %}
 {% load tags %}
 {% block content %}
+<h1 class="display-4">
+            Сообщения
+        </h1>
 <div class="album py-5 bg-body-tertiary">
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            {% for mailing in object_list %}
+            {% for message in object_list %}
+            {% if message.autor == user %}
             <div class="col-3">
                 <div class="card mb-4 box-shadow">
                     <div class="card-header">
-                        <p class="card-text">{{ mailing.message_id }}</p>
-                        <p class="card-text">{{ mailing.status }}</p>
+                        <p class="card-text">{{ message.title }}</p>
+                        <p class="card-text">{{ message.content  }}</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
-                                {% if mailing.autor == user %}
-                                <a class="btn btn-primary" href="{% url 'mailing:mailing_detail' mailing.pk %}"
+                                <a class="btn btn-primary" href="{% url 'mailing:message_detail' message.pk %}"
                                    role="button">Посмотреть</a>
-                                <a class="btn btn-primary" href="{% url 'mailing:mailing_update' mailing.pk %}"
+                                <a class="btn btn-primary" href="{% url 'mailing:message_update' message.pk %}"
                                    role="button">Изменить</a>
-                                <a class="btn btn-primary" href="{% url 'mailing:mailing_delete' mailing.pk %}"
+                                <a class="btn btn-primary" href="{% url 'mailing:message_delete' message.pk %}"
                                    role="button">Удалить</a>
-                                {% endif %}
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
+            {% endif %}
             {% endfor %}
         </div>
     </div>
