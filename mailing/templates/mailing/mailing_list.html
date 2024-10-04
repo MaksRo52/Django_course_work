@@ -1,0 +1,32 @@
+{% extends 'mailing/index.html' %}
+{% load tags %}
+{% block content %}
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for mailing in object_list %}
+            <div class="col-3">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-header">
+                        <p class="card-text">{{ mailing.message_id }}</p>
+                        <p class="card-text">{{ mailing.client_id | slice:":100" }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a class="btn btn-primary" href="{% url 'mailing:mailing_info' mailing.pk %}"
+                                   role="button">Посмотреть</a>
+                                <a class="btn btn-primary" href="{% url 'mailing:mailing_update' mailing.pk %}"
+                                   role="button">Изменить</a>
+                                <a class="btn btn-primary" href="{% url 'mailing:mailing_delete' mailing.pk %}"
+                                   role="button">Удалить</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
