@@ -24,6 +24,7 @@ class MessageCreateView(CreateView):
     model = Message
     form_class = MessageForm
     success_url = reverse_lazy("mailing:mailing_create")
+
     def form_valid(self, form):
         message = form.save()
         user = self.request.user
@@ -36,6 +37,7 @@ class MessageUpdateView(UpdateView):
     model = Message
     form_class = MessageForm
     success_url = reverse_lazy("mailing:message_list")
+
 
 class MessageDeleteView(DeleteView):
     model = Message
@@ -91,6 +93,7 @@ class ClientCreateView(LoginRequiredMixin, CreateView):
         mailing.autor = user
         mailing.save()
         return super().form_valid(form)
+
 
 class ClientUpdateView(LoginRequiredMixin, UpdateView):
     login_url = "users:login"

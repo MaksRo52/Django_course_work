@@ -47,7 +47,7 @@ class Message(models.Model):
 
 class Mailing(models.Model):
     """Рассылка"""
-
+    is_active = models.BooleanField(default=True, verbose_name="Активность рассылки")
     date_of_first_mail = models.DateTimeField(verbose_name="Дата первой отправки")
     periodicity = models.CharField(
         max_length=1,
@@ -76,7 +76,7 @@ class Mailing(models.Model):
         ordering = ["message_id"]
         permissions = [
             ("can_view_mailing", "Can view mailing"),
-            ("can_disable_mailing", "Can disable mailing"),
+            ("can_disable_mailing", "Can disable mailing")
         ]
 
     def __str__(self):

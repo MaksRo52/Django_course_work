@@ -10,39 +10,68 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('mailing', '0001_initial'),
+        ("mailing", "0001_initial"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='client',
-            name='autor',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL, verbose_name='автор'),
+            model_name="client",
+            name="autor",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to=settings.AUTH_USER_MODEL,
+                verbose_name="автор",
+            ),
         ),
         migrations.AddField(
-            model_name='mailing',
-            name='autor',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL, verbose_name='автор'),
+            model_name="mailing",
+            name="autor",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to=settings.AUTH_USER_MODEL,
+                verbose_name="автор",
+            ),
         ),
         migrations.AddField(
-            model_name='mailing',
-            name='client_id',
-            field=models.ManyToManyField(to='mailing.client', verbose_name='Клиенты'),
+            model_name="mailing",
+            name="client_id",
+            field=models.ManyToManyField(to="mailing.client", verbose_name="Клиенты"),
         ),
         migrations.AddField(
-            model_name='attempt',
-            name='mailing_id',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='mailing.mailing', verbose_name='Рассылка'),
+            model_name="attempt",
+            name="mailing_id",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="mailing.mailing",
+                verbose_name="Рассылка",
+            ),
         ),
         migrations.AddField(
-            model_name='message',
-            name='autor',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL, verbose_name='автор'),
+            model_name="message",
+            name="autor",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to=settings.AUTH_USER_MODEL,
+                verbose_name="автор",
+            ),
         ),
         migrations.AddField(
-            model_name='mailing',
-            name='message_id',
-            field=models.OneToOneField(help_text='Выберите сообщение', on_delete=django.db.models.deletion.CASCADE, to='mailing.message', verbose_name='Сообщение'),
+            model_name="mailing",
+            name="message_id",
+            field=models.OneToOneField(
+                help_text="Выберите сообщение",
+                on_delete=django.db.models.deletion.CASCADE,
+                to="mailing.message",
+                verbose_name="Сообщение",
+            ),
         ),
     ]

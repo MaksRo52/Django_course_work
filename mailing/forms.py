@@ -22,7 +22,13 @@ class MessageForm(StyleFormMixin, ModelForm):
 class MailingForm(StyleFormMixin, ModelForm):
     class Meta:
         model = Mailing
-        exclude = ("autor",)
+        exclude = ("autor","is_active")
+
+class ModeratorMailingForm(StyleFormMixin, ModelForm):
+    class Meta:
+        model = Mailing
+        fields = ("is_active",)
+
 
 class ClientForm(StyleFormMixin, ModelForm):
     class Meta:
