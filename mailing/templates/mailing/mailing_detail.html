@@ -9,9 +9,9 @@
                     <h4 class="my-0 font-weight-normal">{{object.message_id}} </h4>
                 </div>
                 <div class="card-body">
-                    <p class="card-text">Статус: {{object.status}}</p>
+                    <p class="card-text">Статус: {{object.get_status_display}}</p>
                     <p class="card-text">Дата первой отправки: {{object.date_of_first_mail}}</p>
-                    <p class="card-text">Периодичность: {{object.periodicity}}</p>
+                    <p class="card-text">Периодичность: {{object.get_periodicity_display}}</p>
                     <p class="card-text">Содержание письма: {{object.message_id.content}}</p>
                     <p class="card-text">Клиенты: {{object.client_id.name}}</p>
                     <p class="card-text">Автор: {{object.autor}}</p>

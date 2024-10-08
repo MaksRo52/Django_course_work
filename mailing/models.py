@@ -50,14 +50,14 @@ class Mailing(models.Model):
     is_active = models.BooleanField(default=True, verbose_name="Активность рассылки")
     date_of_first_mail = models.DateTimeField(verbose_name="Дата первой отправки")
     periodicity = models.CharField(
-        max_length=1,
+        max_length=5,
         verbose_name="Периодичность",
-        choices={"D": "Раз в день", "W": "Раз в неделю", "M": "Раз в месяц"},
+        choices={"day": "Раз в день", "week": "Раз в неделю", "month": "Раз в месяц"},
     )
     status = models.CharField(
-        max_length=20,
+        max_length=8,
         verbose_name="Статус рассылки",
-        choices={"C": "Создана", "W": "Запущена", "F": "Завершена"},
+        choices={"new": "Создана", "active": "Запущена", "complete": "Завершена"},
     )
     message_id = models.OneToOneField(
         Message,

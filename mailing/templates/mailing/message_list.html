@@ -1,35 +1,30 @@
 {% extends 'mailing/index.html' %}
 {% load tags %}
 {% block content %}
-<h1 class="display-4">
-            Сообщения
-        </h1>
-<div class="album py-5 bg-body-tertiary">
-    <div class="container">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            {% for message in object_list %}
+<h3>
+    Сообщения
+</h3>
+<div class="row row-cols-md-3 mb-3 text-center">
+    <div class="col themed-grid-col"><h6>Тема</h6></div>
+    <div class="col themed-grid-col"><h6>Содержание</h6></div>
+    <div class="col themed-grid-col"><h6></h6></div>
+</div>
+{% for message in object_list %}
             {% if message.autor == user %}
-            <div class="col-3">
-                <div class="card mb-4 box-shadow">
-                    <div class="card-header">
-                        <p class="card-text">{{ message.title }}</p>
-                        <p class="card-text">{{ message.content  }}</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <a class="btn btn-primary" href="{% url 'mailing:message_detail' message.pk %}"
+    <div class="row row-cols-md-3 mb-3 text-center">
+        <div class="container-fluid themed-container text-center"><a>{{ message.title }}</a></div>
+        <div class="container-fluid themed-container text-center"><a>{{ message.content |slice:"100" }}</a></div>
+        <div class="container-fluid themed-container text-center">
+            <div class="btn-group">
+                 <a class="btn btn-primary" href="{% url 'mailing:message_detail' message.pk %}"
                                    role="button">Посмотреть</a>
                                 <a class="btn btn-primary" href="{% url 'mailing:message_update' message.pk %}"
                                    role="button">Изменить</a>
                                 <a class="btn btn-primary" href="{% url 'mailing:message_delete' message.pk %}"
                                    role="button">Удалить</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
-            {% endif %}
-            {% endfor %}
         </div>
     </div>
-</div>
+    {% endif %}
+{% endfor %}
 {% endblock %}

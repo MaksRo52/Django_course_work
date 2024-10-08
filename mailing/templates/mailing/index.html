@@ -11,9 +11,6 @@
             Mailing
         </h1>
         <p class="lead">Mailing - это отличный вариант для рассылок</p>
-        {% if user.is_authenticated %}
-        <p class="lead">{{user.email}}- c возвращением</p>
-        {% endif %}
     </div>
     {% block content %}
     {% endblock %}
