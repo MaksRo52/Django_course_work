@@ -1,5 +1,8 @@
 import logging
+from logging import exception
+
 import pytz
+from dateutil.relativedelta import relativedelta
 from datetime import datetime
 from django.conf import settings
 from apscheduler.schedulers.blocking import BlockingScheduler
@@ -17,18 +20,46 @@ logger = logging.getLogger(__name__)
 
 
 def my_job():
+    print(datetime.now)
     zone = pytz.timezone(settings.TIME_ZONE)
     current_datetime = datetime.now(zone)
     # создание объекта с применением фильтра
-    mailings = Mailing.objects.filter(date_of_first_mail=current_datetime).filter(
-        status=['C', 'W'])
+    mailings = Mailing.objects.filter(date_of_first_mail__lte=current_datetime).filter(
+        status__in=['new', 'active'])
     for mailing in mailings:
-        send_mail(
-                subject=Message.title,
-                message=Message.content,
-                from_email=settings.EMAIL_HOST_USER,
-                recipient_list=[client.email for client in mailing.Client.email.all()]
-           )
+        try:
+            send_mail(
+                    subject=mailing.message.title,
+                    message=mailing.message.content,
+                    from_email=settings.EMAIL_HOST_USER,
+                    recipient_list=mailing.clients.values_list("email", flat=True)
+               )
+            mailing.status = 'active'
+            mailing.save()
+        except Exception as e:
+            logger.error(f"Ошибка при отправке рассылки {mailing.id}: {str(e)}")
+            Attempt.objects.create(
+                mailing_id=mailing.id,
+                status=False,
+                server_response=str(e),
+            )
+        else:
+            Attempt.objects.create(
+                mailing_id=mailing.id,
+                status=True,
+            )
+            logger.info(f"Рассылка {mailing.id} успешно отправлена.")
+        finally:
+            if mailing.periodicity == 'day':
+                mailing.date_of_first_mail += relativedelta(days=1)
+            elif mailing.periodicity == 'week':
+                mailing.date_of_first_mail += relativedelta(days=7)
+            elif mailing.periodicity == 'month':
+                mailing.date_of_first_mail += relativedelta(months=1)
+            mailing.save()
+
+
+
 
 
 @util.close_old_connections
@@ -71,16 +102,16 @@ class Command(BaseCommand):
         logger.info("Планировщик успешно завершен! ")
 
 
-def mail_status_change():
-    """Меняет статус рассылки 'запущена' на 'создана' после времени окончания рассылки"""
-    mailings = Mailing.objects.filter(is_active=True)
-    attempt = Attempt.objects.all()
-
-    for mailing in mailings:
-        maillog = attempt.filter(mailing_id=mailing).all().order_by('-time_try').first()
-        if mailing.status == 'C' and mailing.time_end.hour > datetime.now().hour:
-            mailing.status = 'C'
-            mailing.save()
-        elif mailing.status == 'C' and maillog is not None and datetime.now().day > maillog.time_try.day():
-            mailing.status = 'C'
-            mailing.save()
+# def mail_status_change():
+#     """Меняет статус рассылки 'запущена' на 'создана' после времени окончания рассылки"""
+#     mailings = Mailing.objects.filter(is_active=True)
+#     attempt = Attempt.objects.all()
+#
+#     for mailing in mailings:
+#         maillog = attempt.filter(mailing_id=mailing).all().order_by('-time_try').first()
+#         if mailing.status == 'new' and mailing.time_end.hour > datetime.now().hour:
+#             mailing.status = 'C'
+#             mailing.save()
+#         elif mailing.status == 'C' and maillog is not None and datetime.now().day > maillog.time_try.day():
+#             mailing.status = 'C'
+#             mailing.save()

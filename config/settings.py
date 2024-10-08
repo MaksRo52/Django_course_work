@@ -54,8 +54,12 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "course_work",
+        "USER": "postgres",
+        "PASSWORD": "secret",
+        "HOST": "127.0.0.1",
+        "PORT": 5433,
     }
 }
 
@@ -76,7 +80,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "ru-ru"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Europe/Moscow"
 
 USE_I18N = True
 
@@ -106,3 +110,12 @@ EMAIL_USE_SSL = True
 
 SERVER_EMAIL = EMAIL_HOST_USER
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+LOGGING = {
+'version': 1,
+'disable_existing_loggers': False,
+'formatters': {'default': {'format': '%(asctime)s %(levelname)s %(name)s: %(message)s'}},
+'handlers': {'console': {'class': 'logging.StreamHandler', 'formatter': 'default'}},
+'root': {'level': "INFO", 'handlers': ['console']},
+'loggers': {'django': {'handlers': ['console'], 'propagate': False}},
+}

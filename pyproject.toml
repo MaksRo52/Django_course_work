@@ -12,6 +12,8 @@ django-phonenumber-field = {extras = ["phonenumbers"], version = "^8.0.0"}
 pillow = "^10.4.0"
 django-apscheduler = "^0.7.0"
 pytz = "^2024.2"
+psycopg2-binary = "^2.9.9"
+dateutils = "^0.6.12"
 
 
 [build-system]

@@ -1,4 +1,4 @@
-from django.forms import ModelForm, BooleanField
+from django.forms import ModelForm, BooleanField, DateTimeField
 
 from mailing.models import Message, Mailing, Client
 
@@ -19,10 +19,11 @@ class MessageForm(StyleFormMixin, ModelForm):
         exclude = ("autor",)
 
 
-class MailingForm(StyleFormMixin, ModelForm):
+class MailingForm(StyleFormMixin,DateTimeField, ModelForm):
     class Meta:
         model = Mailing
         exclude = ("autor","is_active", "status")
+
 
 class ModeratorMailingForm(StyleFormMixin, ModelForm):
     class Meta:

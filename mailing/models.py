@@ -59,13 +59,13 @@ class Mailing(models.Model):
         verbose_name="Статус рассылки",
         choices={"new": "Создана", "active": "Запущена", "complete": "Завершена"},
     )
-    message_id = models.OneToOneField(
+    message = models.OneToOneField(
         Message,
         on_delete=models.CASCADE,
         verbose_name="Сообщение",
         help_text="Выберите сообщение",
     )
-    client_id = models.ManyToManyField(Client, verbose_name="Клиенты")
+    clients = models.ManyToManyField(Client, verbose_name="Клиенты")
     autor = models.ForeignKey(
         User, verbose_name="автор", on_delete=models.SET_NULL, **NULLABLE
     )
@@ -73,7 +73,7 @@ class Mailing(models.Model):
     class Meta:
         verbose_name = "Рассылка"
         verbose_name_plural = "Рассылки"
-        ordering = ["message_id"]
+        ordering = ["date_of_first_mail"]
         permissions = [
             ("can_view_mailing", "Can view mailing"),
             ("can_disable_mailing", "Can disable mailing")
@@ -93,8 +93,8 @@ class Attempt(models.Model):
         verbose_name="Дата последней попытки", auto_now=True
     )
     status = models.BooleanField(verbose_name="Статус попытки")
-    server_response = models.CharField(max_length=100, verbose_name="Ответ сервера")
-    mailing_id = models.ForeignKey(
+    server_response = models.TextField(verbose_name="Ответ сервера", **NULLABLE)
+    mailing = models.ForeignKey(
         Mailing, on_delete=models.CASCADE, verbose_name="Рассылка", **NULLABLE
     )
 
