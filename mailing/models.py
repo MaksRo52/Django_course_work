@@ -48,7 +48,7 @@ class Message(models.Model):
 class Mailing(models.Model):
     """Рассылка"""
     is_active = models.BooleanField(default=True, verbose_name="Активность рассылки")
-    date_of_first_mail = models.DateTimeField(verbose_name="Дата первой отправки")
+    date_of_first_mail = models.DateTimeField(verbose_name="Дата отправки")
     periodicity = models.CharField(
         max_length=5,
         verbose_name="Периодичность",
@@ -86,22 +86,15 @@ class Mailing(models.Model):
 class Attempt(models.Model):
     """Попытка отправки письма"""
 
-    date_first_attempt = models.DateTimeField(
-        verbose_name="Дата первой попытки", auto_now_add=True
-    )
-    date_last_attempt = models.DateTimeField(
-        verbose_name="Дата последней попытки", auto_now=True
-    )
+    created_at = models.DateTimeField(auto_now_add=True,verbose_name="Дата первой попытки")
     status = models.BooleanField(verbose_name="Статус попытки")
     server_response = models.TextField(verbose_name="Ответ сервера", **NULLABLE)
-    mailing = models.ForeignKey(
-        Mailing, on_delete=models.CASCADE, verbose_name="Рассылка", **NULLABLE
-    )
+    mailing = models.ForeignKey(Mailing, on_delete=models.CASCADE, verbose_name="Рассылка", related_name="attempts", **NULLABLE)
 
     class Meta:
         verbose_name = "Попытка отправки"
         verbose_name_plural = "Попытки отправки"
-        ordering = ["-date_first_attempt"]
+        ordering = ["-created_at"]
 
     def __str__(self):
-        return self.date_first_attempt
+        return str(self.created_at)

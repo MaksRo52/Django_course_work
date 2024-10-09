@@ -1,16 +1,23 @@
 from django.forms import ModelForm, BooleanField, DateTimeField
-
 from mailing.models import Message, Mailing, Client
+from django.forms import ModelForm
+from django.forms.widgets import CheckboxInput, Select, DateTimeInput
+from users.models import User
 
 
 class StyleFormMixin(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
-            if isinstance(field, BooleanField):
-                field.widget.attrs["class"] = "form-check-input"
+            if isinstance(field.widget, CheckboxInput):
+                field.widget.attrs['class'] = 'form-check-input'
+            elif isinstance(field.widget,Select):
+                field.widget.attrs['class'] = 'form-select'
             else:
-                field.widget.attrs["class"] = "form-control"
+                field.widget.attrs['class'] = 'form-control'
+
+            if isinstance(field.widget, DateTimeInput):
+                field.widget.input_type = 'datetime-local'
 
 
 class MessageForm(StyleFormMixin, ModelForm):

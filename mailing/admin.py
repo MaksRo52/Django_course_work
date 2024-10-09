@@ -25,4 +25,4 @@ class MailingAdmin(admin.ModelAdmin):
 
 @admin.register(Attempt)
 class AttemptAdmin(admin.ModelAdmin):
-    list_display = ("date_first_attempt", "date_last_attempt", "status")
+    list_display = ("status", "created_at", "mailing")

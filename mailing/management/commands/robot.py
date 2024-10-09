@@ -37,18 +37,11 @@ def my_job():
             mailing.status = 'active'
             mailing.save()
         except Exception as e:
-            logger.error(f"Ошибка при отправке рассылки {mailing.id}: {str(e)}")
-            Attempt.objects.create(
-                mailing_id=mailing.id,
-                status=False,
-                server_response=str(e),
-            )
+            logger.error(f"Ошибка при отправке рассылки %d: %s {mailing.id}: {str(e)}")
+            mailing.attempts.create(status=False, server_response=str(e))
         else:
-            Attempt.objects.create(
-                mailing_id=mailing.id,
-                status=True,
-            )
-            logger.info(f"Рассылка {mailing.id} успешно отправлена.")
+            mailing.attempts.create(status=True)
+            logger.info(f"Рассылка %d {mailing.id} успешно отправлена.")
         finally:
             if mailing.periodicity == 'day':
                 mailing.date_of_first_mail += relativedelta(days=1)

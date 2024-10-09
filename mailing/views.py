@@ -20,6 +20,7 @@ class MessageDetailView(DetailView):
     model = Message
 
 
+
 class MessageCreateView(CreateView):
     model = Message
     form_class = MessageForm
@@ -37,6 +38,7 @@ class MessageUpdateView(UpdateView):
     model = Message
     form_class = MessageForm
     success_url = reverse_lazy("mailing:message_list")
+
 
 
 class MessageDeleteView(DeleteView):
