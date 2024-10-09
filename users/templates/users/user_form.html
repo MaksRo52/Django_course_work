@@ -9,10 +9,16 @@
                     {% csrf_token %}
                     {{ form.as_p }}
                 </div>
+                {% if object %}
                 <button type="submit" class="btn btn-success">
                     Зарегистрироваться
                 </button>
-                <a class="btn btn-primary" href="{% url 'mailing:index' %}" role="button">Отмена</a>
+                {% else %}
+                <button type="submit" class="btn btn-primary">
+                    Сохранить
+                </button>
+                {% endif %}
+                <a class="btn btn-primary" href="{% url 'users:profile_list' %}" role="button">Отмена</a>
                 </div>
             </div>
     </form>

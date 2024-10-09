@@ -1,17 +1,18 @@
 import secrets
 from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import PasswordResetView
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
-from django.views import generic
+from django.views.generic import CreateView, DetailView, UpdateView, ListView
 from django.utils.crypto import get_random_string
 from config.settings import EMAIL_HOST_USER
-from users.forms import UserRegisterForm
+from users.forms import UserRegisterForm, UserUpdateForm
 from users.models import User
 
 
-class UserCreateView(generic.CreateView):
+class UserCreateView(CreateView):
     model = User
     form_class = UserRegisterForm
     success_url = reverse_lazy("users:login")
@@ -64,6 +65,17 @@ class RecoveryPasswordView(PasswordResetView):
         return redirect(reverse("users:login"))
 
 
-class UserProfileView(generic.DetailView):
+class UserProfileView(LoginRequiredMixin, DetailView):
+    login_url = "users:login"
     model = User
     template_name = "users/profile.html"
+
+class UserUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = "users:login"
+    model = User
+    form_class = UserUpdateForm
+    success_url = reverse_lazy("users:profile_list")
+
+class UserListView(LoginRequiredMixin, ListView):
+    login_url = "users:login"
+    model = User

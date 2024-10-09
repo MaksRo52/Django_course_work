@@ -17,4 +17,3 @@ class BlogForm(StyleFormMixin, ModelForm):
     class Meta:
         model = Blog
         exclude = ("slug", "created_at", "views", "status")
-

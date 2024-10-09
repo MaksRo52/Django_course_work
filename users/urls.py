@@ -5,7 +5,7 @@ from users.views import (
     UserCreateView,
     email_verification,
     RecoveryPasswordView,
-    UserProfileView,
+    UserProfileView, UserUpdateView, UserListView
 )
 
 app_name = UsersConfig.name
@@ -23,5 +23,7 @@ urlpatterns = [
     path("recovery/", RecoveryPasswordView.as_view(), name="recovery"),
     path(
         "profile/<int:pk>/", UserProfileView.as_view(), name="profile"
-    ),  # Для показа профиля
+    ),
+    path("profile_list/", UserListView.as_view(), name="profile_list"),
+    path("update/<int:pk>/", UserUpdateView.as_view(), name="profile_update")
 ]

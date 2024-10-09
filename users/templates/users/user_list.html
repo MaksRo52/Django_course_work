@@ -1,0 +1,26 @@
+{% extends 'mailing/index.html' %}
+{% load tags %}
+{% block content %}
+<h3>
+Пользователи сервиса
+</h3>
+<div class="row row-cols-md-4 text-center ">
+    <div class="col themed-grid-col "><h6>Почта</h6></div>
+    <div class="col themed-grid-col "><h6>Номер телефона</h6></div>
+    <div class="col themed-grid-col "><h6>Активность</h6></div>
+    <div class="col themed-grid-col"><h6>Взаимодействие</h6></div>
+</div>
+{% for user in user_list %}
+    <div class="row row-cols-md-4 text-center border">
+        <div class="container-fluid themed-container text-center border"><a>{{ user.email }}</a></div>
+        <div class="container-fluid themed-container text-center border"><a>{{ user.phone_number}}</a></div>
+        <div class="container-fluid themed-container text-center border"><a>{{ user.is_active}}</a></div>
+        <div class="container-fluid themed-container border">
+            <div class="btn-group">
+                                <a class="btn btn-primary" href="{% url 'users:profile_update' user.pk %}"
+                                   role="button">Изменить</a>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+{% endblock %}

@@ -3,6 +3,7 @@ from blog.forms import BlogForm
 from blog.models import Blog
 from django.views import generic
 from unidecode import unidecode
+
 # Create your views here.
 
 
@@ -50,6 +51,7 @@ class BlogCreateView(generic.CreateView):
         if form.is_valid():
             new_blog = form.save()
             from slugify import slugify
+
             new_blog.slug = slugify(new_blog.title)
             new_blog.save()
         return super().form_valid(form)

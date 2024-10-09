@@ -23,6 +23,7 @@ class Client(models.Model):
         verbose_name_plural = "Клиенты"
         ordering = ["name"]
 
+
     def __str__(self):
         return self.name
 

@@ -11,7 +11,7 @@
     <div class="col themed-grid-col"><h6>Взаимодействие</h6></div>
 </div>
 {% for mailing in object_list %}
-            {% if mailing.autor == user %}
+            {% if mailing.autor == user or perms.mailing.can_view_mailing %}
     <div class="row row-cols-md-4 text-center border">
         <div class="container-fluid themed-container text-center border"><a>{{ mailing.message.title }}</a></div>
         <div class="container-fluid themed-container text-center border"><a>{{ mailing.get_status_display}}</a></div>
@@ -20,10 +20,12 @@
             <div class="btn-group">
                  <a class="btn btn-primary" href="{% url 'mailing:mailing_detail' mailing.pk %}"
                                    role="button">Посмотреть</a>
+                {% if mailing.autor == user %}
                                 <a class="btn btn-primary" href="{% url 'mailing:mailing_update' mailing.pk %}"
                                    role="button">Изменить</a>
                                 <a class="btn btn-primary" href="{% url 'mailing:mailing_delete' mailing.pk %}"
                                    role="button">Удалить</a>
+                    {% endif %}
             </div>
         </div>
     </div>
