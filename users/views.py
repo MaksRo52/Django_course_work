@@ -1,14 +1,15 @@
 import secrets
 from django.contrib.auth.forms import PasswordResetForm
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.views import PasswordResetView
+from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, DetailView, UpdateView, ListView
 from django.utils.crypto import get_random_string
 from config.settings import EMAIL_HOST_USER
-from users.forms import UserRegisterForm, UserUpdateForm
+from users.forms import UserRegisterForm, ManagerUserUpdateForm
 from users.models import User
 
 
@@ -70,12 +71,16 @@ class UserProfileView(LoginRequiredMixin, DetailView):
     model = User
     template_name = "users/profile.html"
 
-class UserUpdateView(LoginRequiredMixin, UpdateView):
+class UserUpdateView(LoginRequiredMixin,PermissionRequiredMixin, UpdateView):
     login_url = "users:login"
     model = User
-    form_class = UserUpdateForm
     success_url = reverse_lazy("users:profile_list")
+    form_class = ManagerUserUpdateForm
+    permission_required = 'users.can_view_users'
 
-class UserListView(LoginRequiredMixin, ListView):
+
+class UserListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     login_url = "users:login"
     model = User
+    permission_required = ['users.can_view_users', 'users.can_edit_is_active']
+

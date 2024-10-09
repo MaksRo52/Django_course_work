@@ -1,5 +1,6 @@
 import random
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy
 from django.views.generic import (
     ListView,
@@ -10,7 +11,7 @@ from django.views.generic import (
     TemplateView,
 )
 from blog.models import Blog
-from mailing.forms import MessageForm, MailingForm, ClientForm
+from mailing.forms import MessageForm, MailingForm, ClientForm, ModeratorMailingForm
 from mailing.models import Mailing, Message, Client
 
 
@@ -99,6 +100,13 @@ class MailingUpdateView(LoginRequiredMixin, UpdateView):
     model = Mailing
     form_class = MailingForm
     success_url = reverse_lazy("mailing:index")
+    def get_form_class(self):
+        user = self.request.user
+        if user == self.object.autor:
+            return MailingForm
+        elif user.has_perm("mailing.can_disable_mailing"):
+            return ModeratorMailingForm
+        raise PermissionDenied
 
 
 class MailingDeleteView(LoginRequiredMixin, DeleteView):
