@@ -4,21 +4,12 @@
         <form class="text-body-color mb-3 form-control" method="post" enctype="multipart/form-data">
             <div class="col-8">
                 <div class="card">
-                    {% if object %}
-                        <p class="card-text">Редактирование</p>
-                    {% else %}
-                        <p class="card-text">Создание</p>
-                    {% endif %}
                     <div class="card-body">
                         {% csrf_token %}
                         {{ form.as_p }}
                     </div>
                     <button type="submit" class="btn btn-success">
-                        {% if object %}
-                            Сохранить
-                        {% else %}
-                            Создать
-                        {% endif %}
+                        Создать
                     </button>
                     <a class="btn btn-primary" href="{% url 'mailing:message_list' %}" role="button">Отмена</a>
                 </div>

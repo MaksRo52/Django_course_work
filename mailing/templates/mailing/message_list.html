@@ -4,18 +4,18 @@
 <h3>
     Сообщения
 </h3>
-<div class="row row-cols-md-3 mb-3 text-center">
-    <div class="col themed-grid-col"><h6>Тема</h6></div>
-    <div class="col themed-grid-col"><h6>Содержание</h6></div>
-    <div class="col themed-grid-col"><h6></h6></div>
+<div class="row row-cols-md-3 text-center ">
+    <div class="col themed-grid-col "><h6>Тема</h6></div>
+    <div class="col themed-grid-col "><h6>Содержание</h6></div>
+    <div class="col themed-grid-col "><h6>Взаимодействия</h6></div>
 </div>
 {% for message in object_list %}
             {% if message.autor == user %}
-    <div class="row row-cols-md-3 mb-3 text-center">
-        <div class="container-fluid themed-container text-center"><a>{{ message.title }}</a></div>
-        <div class="container-fluid themed-container text-center"><a>{{ message.content |slice:"100" }}</a></div>
-        <div class="container-fluid themed-container text-center">
-            <div class="btn-group">
+    <div class="row row-cols-md-3 text-center border">
+        <div class="container-fluid themed-container text-center border"><a>{{ message.title }}</a></div>
+        <div class="container-fluid themed-container text-center border"><a>{{ message.content |slice:"100" }}</a></div>
+        <div class="container-fluid themed-container text-center border">
+            <div class="btn-group ">
                  <a class="btn btn-primary" href="{% url 'mailing:message_detail' message.pk %}"
                                    role="button">Посмотреть</a>
                                 <a class="btn btn-primary" href="{% url 'mailing:message_update' message.pk %}"

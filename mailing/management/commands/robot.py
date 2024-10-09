@@ -18,23 +18,23 @@ from mailing.models import Mailing, Message, Attempt
 logger = logging.getLogger(__name__)
 
 
-
 def my_job():
     print(datetime.now)
     zone = pytz.timezone(settings.TIME_ZONE)
     current_datetime = datetime.now(zone)
     # создание объекта с применением фильтра
     mailings = Mailing.objects.filter(date_of_first_mail__lte=current_datetime).filter(
-        status__in=['new', 'active'])
+        status__in=["new", "active"]
+    )
     for mailing in mailings:
         try:
             send_mail(
-                    subject=mailing.message.title,
-                    message=mailing.message.content,
-                    from_email=settings.EMAIL_HOST_USER,
-                    recipient_list=mailing.clients.values_list("email", flat=True)
-               )
-            mailing.status = 'active'
+                subject=mailing.message.title,
+                message=mailing.message.content,
+                from_email=settings.EMAIL_HOST_USER,
+                recipient_list=mailing.clients.values_list("email", flat=True),
+            )
+            mailing.status = "active"
             mailing.save()
         except Exception as e:
             logger.error(f"Ошибка при отправке рассылки %d: %s {mailing.id}: {str(e)}")
@@ -43,16 +43,13 @@ def my_job():
             mailing.attempts.create(status=True)
             logger.info(f"Рассылка %d {mailing.id} успешно отправлена.")
         finally:
-            if mailing.periodicity == 'day':
+            if mailing.periodicity == "day":
                 mailing.date_of_first_mail += relativedelta(days=1)
-            elif mailing.periodicity == 'week':
+            elif mailing.periodicity == "week":
                 mailing.date_of_first_mail += relativedelta(days=7)
-            elif mailing.periodicity == 'month':
+            elif mailing.periodicity == "month":
                 mailing.date_of_first_mail += relativedelta(months=1)
             mailing.save()
-
-
-
 
 
 @util.close_old_connections

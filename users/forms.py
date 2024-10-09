@@ -9,14 +9,14 @@ class StyleFormMixin(ModelForm):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             if isinstance(field.widget, CheckboxInput):
-                field.widget.attrs['class'] = 'form-check-input'
-            elif isinstance(field.widget,Select):
-                field.widget.attrs['class'] = 'form-select'
+                field.widget.attrs["class"] = "form-check-input"
+            elif isinstance(field.widget, Select):
+                field.widget.attrs["class"] = "form-select"
             else:
-                field.widget.attrs['class'] = 'form-control'
+                field.widget.attrs["class"] = "form-control"
 
             if isinstance(field.widget, DateTimeInput):
-                field.widget.input_type = 'datetime-local'
+                field.widget.input_type = "datetime-local"
 
 
 class UserRegisterForm(StyleFormMixin, UserCreationForm):
@@ -27,5 +27,3 @@ class UserRegisterForm(StyleFormMixin, UserCreationForm):
             "password1",
             "password2",
         )
-
-

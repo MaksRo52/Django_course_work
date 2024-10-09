@@ -4,18 +4,18 @@
 <h3>
     Клиенты
 </h3>
-<div class="row row-cols-md-4 mb-4 text-center">
+<div class="row row-cols-md-4 text-center">
     <div class="col themed-grid-col"><h6>ФИО</h6></div>
     <div class="col themed-grid-col"><h6>Почта</h6></div>
     <div class="col themed-grid-col"><h6>Комментарий</h6></div>
 </div>
 {% for client in object_list %}
     {% if client.autor == user %}
-    <div class="row row-cols-md-4 mb-4 text-center">
-        <div class="container-fluid themed-container text-center"><a>{{ client.name }}</a></div>
-        <div class="container-fluid themed-container text-center"><a>{{ client.email }}</a></div>
-        <div class="container-fluid themed-container text-center"><a>{{ client.comment }}</a></div>
-        <div class="container-fluid themed-container text-center">
+    <div class="row row-cols-md-4 text-center border">
+        <div class="container-fluid themed-container text-center border"><a>{{ client.name }}</a></div>
+        <div class="container-fluid themed-container text-center border"><a>{{ client.email }}</a></div>
+        <div class="container-fluid themed-container text-center border"><a>{{ client.comment }}</a></div>
+        <div class="container-fluid themed-container text-center border">
             <div class="btn-group">
                 <a class="btn btn-primary" href="{% url 'mailing:client_update' client.pk %}"
                    role="button">Изменить</a>

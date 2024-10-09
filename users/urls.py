@@ -12,6 +12,11 @@ app_name = UsersConfig.name
 
 urlpatterns = [
     path("login/", LoginView.as_view(template_name="login.html"), name="login"),
+    path(
+        "active_login/",
+        LoginView.as_view(template_name="login_after_activate.html"),
+        name="active_login",
+    ),
     path("logout/", LogoutView.as_view(), name="logout"),
     path("register/", UserCreateView.as_view(), name="register"),
     path("activate/<str:token>/", email_verification, name="activate"),

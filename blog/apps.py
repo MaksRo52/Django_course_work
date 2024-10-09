@@ -1,8 +1,6 @@
-from time import sleep
-
 from django.apps import AppConfig
 
 
-class MailingConfig(AppConfig):
+class BlogConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
-    name = "mailing"
+    name = "blog"

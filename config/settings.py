@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     "users",
     "django_apscheduler",
     "phonenumber_field",
+    "blog",
 ]
 
 MIDDLEWARE = [
@@ -112,10 +113,12 @@ SERVER_EMAIL = EMAIL_HOST_USER
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 LOGGING = {
-'version': 1,
-'disable_existing_loggers': False,
-'formatters': {'default': {'format': '%(asctime)s %(levelname)s %(name)s: %(message)s'}},
-'handlers': {'console': {'class': 'logging.StreamHandler', 'formatter': 'default'}},
-'root': {'level': "INFO", 'handlers': ['console']},
-'loggers': {'django': {'handlers': ['console'], 'propagate': False}},
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "default": {"format": "%(asctime)s %(levelname)s %(name)s: %(message)s"}
+    },
+    "handlers": {"console": {"class": "logging.StreamHandler", "formatter": "default"}},
+    "root": {"level": "INFO", "handlers": ["console"]},
+    "loggers": {"django": {"handlers": ["console"], "propagate": False}},
 }

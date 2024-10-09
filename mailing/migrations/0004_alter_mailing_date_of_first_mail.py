@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('mailing', '0003_alter_attempt_options_and_more'),
+        ("mailing", "0003_alter_attempt_options_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='mailing',
-            name='date_of_first_mail',
-            field=models.DateTimeField(verbose_name='Дата отправки'),
+            model_name="mailing",
+            name="date_of_first_mail",
+            field=models.DateTimeField(verbose_name="Дата отправки"),
         ),
     ]

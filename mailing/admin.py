@@ -23,6 +23,7 @@ class ClientAdmin(admin.ModelAdmin):
 class MailingAdmin(admin.ModelAdmin):
     list_display = ("status", "message")
 
+
 @admin.register(Attempt)
 class AttemptAdmin(admin.ModelAdmin):
     list_display = ("status", "created_at", "mailing")

@@ -37,7 +37,7 @@ def email_verification(request, token):
     user = get_object_or_404(User, token=token)
     user.is_active = True
     user.save()
-    return redirect(reverse("users:login"))
+    return redirect(reverse("users:active_login"))
 
 
 class RecoveryPasswordView(PasswordResetView):

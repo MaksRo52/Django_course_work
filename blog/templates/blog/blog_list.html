@@ -1,0 +1,37 @@
+{% extends 'mailing/index.html' %}
+{% load tags %}
+{% block content %}
+    <div class="container">
+        <div class="row text-center">
+            <a class="btn btn-outline-primary mx-auto" href="{% url 'blog:blog_create' %}">Создать блог</a>
+            <div class="pb-4"></div>
+            {% for object in status_list %}
+                <div class="col-3">
+                    <div class="card mb-4 box-shadow">
+                        <div class="card-header">
+                            <h4 class="my-0 font-weight-normal">{{ object.title }}</h4>
+                        </div>
+                        <div class="card-body">
+                            {% include 'includes/inc_image.html' %}
+                            <p class="text-start">{{ object.content  |slice:"100" }}</p>
+                            <h1 class="card-title pricing-card-title"></h1>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a class="btn btn-sm btn-outline-primary"
+                                       href="{% url 'blog:blog_view' object.slug %}"
+                                       role="button">Подробнее</a>
+                                    <a class="btn btn-sm btn-outline-success"
+                                       href="{% url 'blog:blog_update' object.slug %}"
+                                       role="button">Изменить</a>
+                                    <a class="btn btn-sm btn-outline-danger"
+                                       href="{% url 'blog:blog_delete' object.slug %}"
+                                       role="button">Удалить</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

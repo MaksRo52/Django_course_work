@@ -1,36 +1,32 @@
 {% extends 'mailing/index.html' %}
 {% load tags %}
 {% block content %}
-    <h3>
+<h3>
     Рассылки
 </h3>
-<div class="album py-5 bg-body-tertiary">
-    <div class="container">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            {% for mailing in object_list %}
-            <div class="col-3">
-                <div class="card mb-4 box-shadow">
-                    <div class="card-header">
-                        <p class="card-text">{{ mailing.message.title }}</p>
-                        <p class="card-text">{{ mailing.get_status_display}}</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                {% if mailing.autor == user %}
-                                <a class="btn btn-primary" href="{% url 'mailing:mailing_detail' mailing.pk %}"
+<div class="row row-cols-md-4 text-center ">
+    <div class="col themed-grid-col "><h6>Тема</h6></div>
+    <div class="col themed-grid-col "><h6>Статус отправки</h6></div>
+    <div class="col themed-grid-col "><h6>Дата отправки</h6></div>
+    <div class="col themed-grid-col"><h6>Взаимодействие</h6></div>
+</div>
+{% for mailing in object_list %}
+            {% if mailing.autor == user %}
+    <div class="row row-cols-md-4 text-center border">
+        <div class="container-fluid themed-container text-center border"><a>{{ mailing.message.title }}</a></div>
+        <div class="container-fluid themed-container text-center border"><a>{{ mailing.get_status_display}}</a></div>
+        <div class="container-fluid themed-container text-center border"><a>{{ mailing.date_of_first_mail}}</a></div>
+        <div class="container-fluid themed-container border">
+            <div class="btn-group">
+                 <a class="btn btn-primary" href="{% url 'mailing:mailing_detail' mailing.pk %}"
                                    role="button">Посмотреть</a>
                                 <a class="btn btn-primary" href="{% url 'mailing:mailing_update' mailing.pk %}"
                                    role="button">Изменить</a>
                                 <a class="btn btn-primary" href="{% url 'mailing:mailing_delete' mailing.pk %}"
                                    role="button">Удалить</a>
-                                {% endif %}
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
             </div>
-            {% endfor %}
         </div>
     </div>
-</div>
+    {% endif %}
+{% endfor %}
 {% endblock %}

@@ -7,26 +7,37 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('mailing', '0002_alter_attempt_server_response'),
+        ("mailing", "0002_alter_attempt_server_response"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='attempt',
-            options={'ordering': ['-created_at'], 'verbose_name': 'Попытка отправки', 'verbose_name_plural': 'Попытки отправки'},
+            name="attempt",
+            options={
+                "ordering": ["-created_at"],
+                "verbose_name": "Попытка отправки",
+                "verbose_name_plural": "Попытки отправки",
+            },
         ),
         migrations.RenameField(
-            model_name='attempt',
-            old_name='date_first_attempt',
-            new_name='created_at',
+            model_name="attempt",
+            old_name="date_first_attempt",
+            new_name="created_at",
         ),
         migrations.RemoveField(
-            model_name='attempt',
-            name='date_last_attempt',
+            model_name="attempt",
+            name="date_last_attempt",
         ),
         migrations.AlterField(
-            model_name='attempt',
-            name='mailing',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='attempts', to='mailing.mailing', verbose_name='Рассылка'),
+            model_name="attempt",
+            name="mailing",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="attempts",
+                to="mailing.mailing",
+                verbose_name="Рассылка",
+            ),
         ),
     ]

@@ -47,6 +47,7 @@ class Message(models.Model):
 
 class Mailing(models.Model):
     """Рассылка"""
+
     is_active = models.BooleanField(default=True, verbose_name="Активность рассылки")
     date_of_first_mail = models.DateTimeField(verbose_name="Дата отправки")
     periodicity = models.CharField(
@@ -76,7 +77,7 @@ class Mailing(models.Model):
         ordering = ["date_of_first_mail"]
         permissions = [
             ("can_view_mailing", "Can view mailing"),
-            ("can_disable_mailing", "Can disable mailing")
+            ("can_disable_mailing", "Can disable mailing"),
         ]
 
     def __str__(self):
@@ -86,10 +87,18 @@ class Mailing(models.Model):
 class Attempt(models.Model):
     """Попытка отправки письма"""
 
-    created_at = models.DateTimeField(auto_now_add=True,verbose_name="Дата первой попытки")
+    created_at = models.DateTimeField(
+        auto_now_add=True, verbose_name="Дата первой попытки"
+    )
     status = models.BooleanField(verbose_name="Статус попытки")
     server_response = models.TextField(verbose_name="Ответ сервера", **NULLABLE)
-    mailing = models.ForeignKey(Mailing, on_delete=models.CASCADE, verbose_name="Рассылка", related_name="attempts", **NULLABLE)
+    mailing = models.ForeignKey(
+        Mailing,
+        on_delete=models.CASCADE,
+        verbose_name="Рассылка",
+        related_name="attempts",
+        **NULLABLE
+    )
 
     class Meta:
         verbose_name = "Попытка отправки"
