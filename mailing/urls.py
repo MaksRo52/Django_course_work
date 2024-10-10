@@ -1,6 +1,5 @@
-from tempfile import template
-
 from django.urls import path
+from django.views.decorators.cache import cache_page
 from mailing.apps import MailingConfig
 from mailing.views import (
     MailingCreateView,
@@ -29,16 +28,26 @@ urlpatterns = [
     path("create/", MailingCreateView.as_view(), name="mailing_create"),
     path("update/<int:pk>", MailingUpdateView.as_view(), name="mailing_update"),
     path("delete/<int:pk>", MailingDeleteView.as_view(), name="mailing_delete"),
-    path("mailing/<int:pk>", MailingDetailView.as_view(), name="mailing_detail"),
+    path(
+        "mailing/<int:pk>",
+        cache_page(60)(MailingDetailView.as_view()),
+        name="mailing_detail",
+    ),
     path("client_create/", ClientCreateView.as_view(), name="client_create"),
     path("client_list/", ClientListView.as_view(), name="client_list"),
-    path("client_detail/<int:pk>/", ClientDetailView.as_view(), name="client_detail"),
+    path(
+        "client_detail/<int:pk>/",
+        cache_page(60)(ClientDetailView.as_view()),
+        name="client_detail",
+    ),
     path("client_update/<int:pk>/", ClientUpdateView.as_view(), name="client_update"),
     path("client_delete/<int:pk>/", ClientDeleteView.as_view(), name="client_delete"),
     path("message_create/", MessageCreateView.as_view(), name="message_create"),
     path("messages/", MessageListView.as_view(), name="message_list"),
     path(
-        "message_detail/<int:pk>/", MessageDetailView.as_view(), name="message_detail"
+        "message_detail/<int:pk>/",
+        cache_page(60)(MessageDetailView.as_view()),
+        name="message_detail",
     ),
     path(
         "message_update/<int:pk>/", MessageUpdateView.as_view(), name="message_update"
@@ -48,7 +57,11 @@ urlpatterns = [
     ),
     path("client_create/", ClientCreateView.as_view(), name="client_create"),
     path("clients/", ClientListView.as_view(), name="client_list"),
-    path("client_detail/<int:pk>", ClientDetailView.as_view(), name="client_detail"),
+    path(
+        "client_detail/<int:pk>",
+        cache_page(60)(ClientDetailView.as_view()),
+        name="client_detail",
+    ),
     path("client_update/<int:pk>", ClientUpdateView.as_view(), name="client_update"),
     path("client_delete/<int:pk>", ClientDeleteView.as_view(), name="client_delete"),
 ]

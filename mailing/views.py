@@ -61,6 +61,7 @@ class MessageUpdateView(LoginRequiredMixin, UpdateView):
     model = Message
     form_class = MessageForm
     success_url = reverse_lazy("mailing:message_list")
+
     def get_form_class(self):
         user = self.request.user
         if user != self.object.autor:
@@ -73,6 +74,7 @@ class MessageDeleteView(LoginRequiredMixin, DeleteView):
     login_url = "users:login"
     model = Message
     success_url = reverse_lazy("mailing:message_list")
+
     def get_form_class(self):
         user = self.request.user
         if user != self.object.autor:
@@ -81,11 +83,9 @@ class MessageDeleteView(LoginRequiredMixin, DeleteView):
             return self.form_class
 
 
-
 class MailingListView(LoginRequiredMixin, ListView):
     login_url = "users:login"
     model = Mailing
-
 
 
 class MailingDetailView(LoginRequiredMixin, DetailView):
@@ -115,6 +115,7 @@ class MailingUpdateView(LoginRequiredMixin, UpdateView):
     model = Mailing
     form_class = MailingForm
     success_url = reverse_lazy("mailing:index")
+
     def get_form_class(self):
         user = self.request.user
         if user == self.object.autor:
@@ -128,6 +129,7 @@ class MailingDeleteView(LoginRequiredMixin, DeleteView):
     login_url = "users:login"
     model = Mailing
     success_url = reverse_lazy("mailing:index")
+
     def get_form_class(self):
         user = self.request.user
         if user != self.object.autor:

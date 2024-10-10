@@ -71,16 +71,16 @@ class UserProfileView(LoginRequiredMixin, DetailView):
     model = User
     template_name = "users/profile.html"
 
-class UserUpdateView(LoginRequiredMixin,PermissionRequiredMixin, UpdateView):
+
+class UserUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     login_url = "users:login"
     model = User
     success_url = reverse_lazy("users:profile_list")
     form_class = ManagerUserUpdateForm
-    permission_required = 'users.can_view_users'
+    permission_required = "users.can_view_users"
 
 
 class UserListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     login_url = "users:login"
     model = User
-    permission_required = ['users.can_view_users', 'users.can_edit_is_active']
-
+    permission_required = ["users.can_view_users", "users.can_edit_is_active"]

@@ -28,11 +28,8 @@ class UserRegisterForm(StyleFormMixin, UserCreationForm):
             "password2",
         )
 
+
 class ManagerUserUpdateForm(StyleFormMixin, UserChangeForm):
     class Meta:
         model = User
-        fields = ('is_active',)
-
-
-
-
+        fields = ("is_active",)
