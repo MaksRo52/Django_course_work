@@ -4,9 +4,6 @@ from blog.models import Blog
 from django.views import generic
 from unidecode import unidecode
 
-from blog.services import get_blog_from_cache
-
-
 # Create your views here.
 
 
@@ -23,9 +20,6 @@ class BlogDetailView(generic.DetailView):
 
 class BlogListView(generic.ListView):
     model = Blog
-
-    def get_queryset(self):
-        return get_blog_from_cache()
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)

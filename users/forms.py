@@ -1,4 +1,4 @@
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import UserCreationForm, PasswordResetForm
 from django.forms import ModelForm
 from django.forms.widgets import CheckboxInput, Select, DateTimeInput
 from users.models import User
@@ -28,8 +28,13 @@ class UserRegisterForm(StyleFormMixin, UserCreationForm):
             "password2",
         )
 
-
-class ManagerUserUpdateForm(StyleFormMixin, UserChangeForm):
+class UserUpdateForm(StyleFormMixin, UserCreationForm):
     class Meta:
         model = User
-        fields = ("is_active",)
+        fields = (
+            "email",
+            "first_name",
+            "last_name")
+        exclude = ("password1", "password2")
+
+

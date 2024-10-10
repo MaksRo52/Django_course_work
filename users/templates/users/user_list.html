@@ -10,14 +10,14 @@
     <div class="col themed-grid-col "><h6>Активность</h6></div>
     <div class="col themed-grid-col"><h6>Взаимодействие</h6></div>
 </div>
-{% for object in user_list %}
+{% for user in user_list %}
     <div class="row row-cols-md-4 text-center border">
-        <div class="container-fluid themed-container text-center border"><a>{{ object.email }}</a></div>
-        <div class="container-fluid themed-container text-center border"><a>{% if object.phone_number %} {{ object.phone_number}} {% else %} Поле не заполнено {% endif %}</a></div>
-        <div class="container-fluid themed-container text-center border"><a>{% if object.is_active %} Активен {% else %} Не активен {% endif %}</a></div>
+        <div class="container-fluid themed-container text-center border"><a>{{ user.email }}</a></div>
+        <div class="container-fluid themed-container text-center border"><a>{{ user.phone_number}}</a></div>
+        <div class="container-fluid themed-container text-center border"><a>{{ user.is_active}}</a></div>
         <div class="container-fluid themed-container border">
             <div class="btn-group">
-                                <a class="btn btn-primary" href="{% url 'users:profile_update' object.pk %}"
+                                <a class="btn btn-primary" href="{% url 'users:profile_update' user.pk %}"
                                    role="button">Изменить</a>
             </div>
         </div>
