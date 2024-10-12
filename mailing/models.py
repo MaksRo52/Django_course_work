@@ -50,7 +50,7 @@ class Mailing(models.Model):
 
     is_active = models.BooleanField(default=True, verbose_name="Активность рассылки")
     date_of_first_mail = models.DateTimeField(verbose_name="Дата отправки")
-    date_of_last_mail = models.DateTimeField(verbose_name="Дата окончания рассылки")
+    date_of_last_mail = models.DateTimeField(verbose_name="Дата окончания рассылки", **NULLABLE)
     periodicity = models.CharField(
         max_length=5,
         verbose_name="Периодичность",
@@ -61,7 +61,7 @@ class Mailing(models.Model):
         verbose_name="Статус рассылки",
         choices={"new": "Создана", "active": "Запущена", "complete": "Завершена"},
     )
-    message = models.OneToOneField(
+    message = models.ForeignKey(
         Message,
         on_delete=models.CASCADE,
         verbose_name="Сообщение",

@@ -9,7 +9,7 @@
     <div class="col themed-grid-col "><h6>Статус рассылки</h6></div>
     <div class="col themed-grid-col "><h6>Последняя попытка</h6></div>
 </div>
-{% for template in object_list %}
+{% for attempt in object_list %}
     <div class="row row-cols-md-3 text-center border">
         <div class="container-fluid themed-container text-center border"><a>{{ attempt.mailing.message.title }}</a></div>
         <div class="container-fluid themed-container text-center border"><a>{% if attempt.status %}Доставлено успешно{% endif %}</a></div>

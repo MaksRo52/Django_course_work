@@ -113,7 +113,7 @@ class MailingUpdateView(LoginRequiredMixin, UpdateView):
     redirect_field_name = "redirect_to"
     model = Mailing
     form_class = MailingForm
-    success_url = reverse_lazy("mailing:index")
+    success_url = reverse_lazy("mailing:mailing_list")
 
     def get_form_class(self):
         user = self.request.user
@@ -122,6 +122,14 @@ class MailingUpdateView(LoginRequiredMixin, UpdateView):
         elif user.has_perm("mailing.can_disable_mailing"):
             return ModeratorMailingForm
         raise PermissionDenied
+
+    def form_valid(self, form):
+        mailing = form.save()
+        user = self.request.user
+        mailing.autor = user
+        mailing.status = "new"
+        mailing.save()
+        return super().form_valid(form)
 
 
 class MailingDeleteView(LoginRequiredMixin, DeleteView):

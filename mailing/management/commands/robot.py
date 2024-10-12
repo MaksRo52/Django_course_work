@@ -23,7 +23,7 @@ def my_job():
     zone = pytz.timezone(settings.TIME_ZONE)
     current_datetime = datetime.now(zone)
     # создание объекта с применением фильтра
-    mailings_off = Mailing.objects.filter(date_of_first_mail__gte=current_datetime).filter(
+    mailings_off = Mailing.objects.filter(date_of_last_mail__lte=current_datetime).filter(
         status__in=["new", "active"]
     )
     for mailing in mailings_off:
@@ -44,11 +44,11 @@ def my_job():
             mailing.status = "active"
             mailing.save()
         except Exception as e:
-            logger.error(f"Ошибка при отправке рассылки %d: %s {mailing.id}: {str(e)}")
+            logger.error(f"Ошибка при отправке рассылки : {mailing.id}: {str(e)}")
             mailing.attempts.create(status=False, server_response=str(e))
         else:
             mailing.attempts.create(status=True)
-            logger.info(f"Рассылка %d {mailing.id} успешно отправлена.")
+            logger.info(f"Рассылка {mailing.id} успешно отправлена.")
         finally:
             if mailing.periodicity == "day":
                 mailing.date_of_first_mail += relativedelta(days=1)
