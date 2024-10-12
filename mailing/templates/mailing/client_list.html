@@ -10,13 +10,14 @@
     <div class="col themed-grid-col"><h6>Комментарий</h6></div>
 </div>
 {% for client in object_list %}
-    {% if client.autor == user %}
     <div class="row row-cols-md-4 text-center border">
         <div class="container-fluid themed-container text-center border"><a>{{ client.name }}</a></div>
         <div class="container-fluid themed-container text-center border"><a>{{ client.email }}</a></div>
         <div class="container-fluid themed-container text-center border"><a>{{ client.comment }}</a></div>
         <div class="container-fluid themed-container text-center border">
             <div class="btn-group">
+                <a class="btn btn-primary" href="{% url 'mailing:client_detail' client.pk %}"
+                   role="button">Посмотреть</a>
                 <a class="btn btn-primary" href="{% url 'mailing:client_update' client.pk %}"
                    role="button">Изменить</a>
                 <a class="btn btn-primary" href="{% url 'mailing:client_delete' client.pk %}"
@@ -24,6 +25,5 @@
             </div>
         </div>
     </div>
-    {% endif %}
 {% endfor %}
 {% endblock %}

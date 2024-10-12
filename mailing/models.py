@@ -13,7 +13,7 @@ class Client(models.Model):
     email = models.EmailField(
         max_length=100, verbose_name="Почта для рассылки", help_text="Заполните почту"
     )
-    comment = models.TextField(max_length=250, verbose_name="Комментарий")
+    comment = models.TextField(max_length=250, verbose_name="Комментарий", **NULLABLE)
     autor = models.ForeignKey(
         User, verbose_name="автор", on_delete=models.SET_NULL, **NULLABLE
     )

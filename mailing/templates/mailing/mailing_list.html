@@ -22,9 +22,10 @@
                                    role="button">Посмотреть</a>
                                 <a class="btn btn-primary" href="{% url 'mailing:mailing_update' mailing.pk %}"
                                    role="button">Изменить</a>
+                {% if mailing.autor == user %}
                                 <a class="btn btn-primary" href="{% url 'mailing:mailing_delete' mailing.pk %}"
                                    role="button">Удалить</a>
-                   
+                   {% endif %}
             </div>
         </div>
     </div>
