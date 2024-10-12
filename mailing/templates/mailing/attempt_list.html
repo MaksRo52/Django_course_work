@@ -11,8 +11,8 @@
 </div>
 {% for attempt in object_list %}
     <div class="row row-cols-md-3 text-center border">
-        <div class="container-fluid themed-container text-center border"><a>{{ attempt.mailing.message.title }}</a></div>
-        <div class="container-fluid themed-container text-center border"><a>{% if attempt.status %}Доставлено успешно{% endif %}</a></div>
+        <div class="container-fluid themed-container text-center border"><a>{{ attempt.mailing.message}}</a></div>
+        <div class="container-fluid themed-container text-center border"><a>{% if attempt.status %}Отправлено успешно{% else %} {{ attempt.server_response }}{% endif %}</a></div>
         <div class="container-fluid themed-container text-center border"><a>{{ attempt.created_at }}</a></div>
     </div>
 {% endfor %}

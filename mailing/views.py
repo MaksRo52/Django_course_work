@@ -31,6 +31,7 @@ class IndexView(TemplateView):
         return context_data
 
 
+
 class MessageListView(LoginRequiredMixin, ListView):
     login_url = "users:login"
     model = Message
