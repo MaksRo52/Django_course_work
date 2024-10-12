@@ -2,8 +2,6 @@ from django.urls import reverse_lazy
 from blog.forms import BlogForm
 from blog.models import Blog
 from django.views import generic
-from unidecode import unidecode
-
 from blog.services import get_blog_from_cache
 
 

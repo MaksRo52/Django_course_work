@@ -23,6 +23,13 @@ def my_job():
     zone = pytz.timezone(settings.TIME_ZONE)
     current_datetime = datetime.now(zone)
     # создание объекта с применением фильтра
+    mailings_off = Mailing.objects.filter(date_of_first_mail__gte=current_datetime).filter(
+        status__in=["new", "active"]
+    )
+    for mailing in mailings_off:
+        mailing.status = "complete"
+        mailing.save()
+
     mailings = Mailing.objects.filter(date_of_first_mail__lte=current_datetime).filter(
         status__in=["new", "active"]
     )

@@ -50,6 +50,7 @@ class Mailing(models.Model):
 
     is_active = models.BooleanField(default=True, verbose_name="Активность рассылки")
     date_of_first_mail = models.DateTimeField(verbose_name="Дата отправки")
+    date_of_last_mail = models.DateTimeField(verbose_name="Дата окончания рассылки")
     periodicity = models.CharField(
         max_length=5,
         verbose_name="Периодичность",

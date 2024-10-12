@@ -17,13 +17,13 @@ from mailing.views import (
     MessageDetailView,
     MessageUpdateView,
     MessageDeleteView,
-    IndexView,
+    IndexView, AttemptListView,
 )
 
 app_name = MailingConfig.name
 
 urlpatterns = [
-    path("", IndexView.as_view(), name="index"),
+    path("", cache_page(60)(IndexView.as_view()), name="index"),
     path("mailings/", MailingListView.as_view(), name="mailing_list"),
     path("create/", MailingCreateView.as_view(), name="mailing_create"),
     path("update/<int:pk>", MailingUpdateView.as_view(), name="mailing_update"),
@@ -64,4 +64,5 @@ urlpatterns = [
     ),
     path("client_update/<int:pk>", ClientUpdateView.as_view(), name="client_update"),
     path("client_delete/<int:pk>", ClientDeleteView.as_view(), name="client_delete"),
+    path("attempts/", AttemptListView.as_view(), name="attempt_list")
 ]

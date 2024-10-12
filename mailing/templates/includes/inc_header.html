@@ -10,6 +10,7 @@
                 {% if perms.users.can_view_users %}
                 <li><a href="{% url 'users:profile_list' %}" class="nav-link px-2 text-white">Пользователи</a></li>
                 {% endif %}
+                <li><a href="{% url 'mailing:attempt_list' %}" class="nav-link px-2 text-white">Попытки рассылок</a></li>
             </ul>
 
 

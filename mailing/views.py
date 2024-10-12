@@ -1,7 +1,6 @@
 import random
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
-from django.forms import ModelForm
 from django.urls import reverse_lazy
 from django.views.generic import (
     ListView,
@@ -13,7 +12,7 @@ from django.views.generic import (
 )
 from blog.models import Blog
 from mailing.forms import MessageForm, MailingForm, ClientForm, ModeratorMailingForm
-from mailing.models import Mailing, Message, Client
+from mailing.models import Mailing, Message, Client, Attempt
 
 
 class IndexView(TemplateView):
@@ -145,6 +144,7 @@ class ClientCreateView(LoginRequiredMixin, CreateView):
     form_class = ClientForm
     success_url = reverse_lazy("mailing:client_list")
 
+
     def form_valid(self, form):
         mailing = form.save()
         user = self.request.user
@@ -159,12 +159,24 @@ class ClientUpdateView(LoginRequiredMixin, UpdateView):
     model = Client
     form_class = ClientForm
     success_url = reverse_lazy("mailing:client_list")
+    def get_form_class(self):
+        user = self.request.user
+        if user != self.object.autor:
+            raise PermissionDenied
+        else:
+            return self.form_class
 
 
 class ClientDeleteView(LoginRequiredMixin, DeleteView):
     login_url = "users:login"
     model = Client
     success_url = reverse_lazy("mailing:client_list")
+    def get_form_class(self):
+        user = self.request.user
+        if user != self.object.autor:
+            raise PermissionDenied
+        else:
+            return self.form_class
 
 
 class ClientListView(LoginRequiredMixin, ListView):
@@ -177,3 +189,13 @@ class ClientDetailView(LoginRequiredMixin, DetailView):
     login_url = "users:login"
     redirect_field_name = "redirect_to"
     model = Client
+    def get_form_class(self):
+        user = self.request.user
+        if user != self.object.autor:
+            raise PermissionDenied
+        else:
+            return self.form_class
+
+
+class AttemptListView(ListView):
+    model = Attempt
