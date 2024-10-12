@@ -11,6 +11,7 @@ from django.views.generic import (
     TemplateView,
 )
 from blog.models import Blog
+from blog.services import get_blog_from_cache
 from mailing.forms import MessageForm, MailingForm, ClientForm, ModeratorMailingForm
 from mailing.models import Mailing, Message, Client, Attempt
 
@@ -26,7 +27,7 @@ class IndexView(TemplateView):
         )
         context_data["clients"] = len(Client.objects.all())
         context_data["blog_list"] = random.sample(
-            list(Blog.objects.all()), len(list(Blog.objects.all()))
+            list(get_blog_from_cache()), len(list(get_blog_from_cache()))
         )[:3]
         return context_data
 

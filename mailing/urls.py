@@ -23,7 +23,7 @@ from mailing.views import (
 app_name = MailingConfig.name
 
 urlpatterns = [
-    path("", cache_page(10)(IndexView.as_view()), name="index"),
+    path("", IndexView.as_view(), name="index"),
     path("mailings/", MailingListView.as_view(), name="mailing_list"),
     path("create/", MailingCreateView.as_view(), name="mailing_create"),
     path("update/<int:pk>", MailingUpdateView.as_view(), name="mailing_update"),
